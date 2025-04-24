@@ -20,8 +20,6 @@ def prueba_de_velocidad():
     print("El pign actual es : ", ping)
 prueba_de_velocidad()
 
-
-
     
     
 
