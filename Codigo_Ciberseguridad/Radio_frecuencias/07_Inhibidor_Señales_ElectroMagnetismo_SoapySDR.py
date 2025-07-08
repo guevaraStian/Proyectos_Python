@@ -1,5 +1,5 @@
-# En este ejemplo de codigo se muestra la creacion de un radar
-# con la distancia de los dispositivos drones cerca
+# En este ejemplo de codigo se muestra la creacion de un inhibidor de señales
+# ingresandole frecuencia inicial y frecuencia final
 # pip install pyrtlsdr numpy matplotlib SoapySDR
 # sudo apt install soapysdr-module-all
 
