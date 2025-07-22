@@ -1,10 +1,13 @@
-# En este codigo se logra hacer un descencriptacion de esteganografia
-# Con las variables exif que tiene una imagen
+# En el siguiente codigo de programacion, se muestra una forma sencilla
+# De extraer informacion en una imagen
+# Pirmero descargamos y usamos las librerias
+# "pip install piexif"
 
 import os
 from PIL import Image
 import piexif
 
+# Con el siguiente codigo se extrae el metadato que esta encriptado
 def extraer_metadato(ruta_imagen):
     try:
         imagen = Image.open(ruta_imagen)
@@ -19,28 +22,28 @@ def extraer_metadato(ruta_imagen):
         else:
             return None
     except Exception as e:
-        print(f"Error con la lectura de la imagen: {e}")
+        print(f"(-) No se pudo leer el dato: {e}")
         return None
 
 def main():
-    print("Lector de metadatos EXIF de imagen JPEG")
+    print("!! Empieza a leer los metadatos de la imagen !!")
 
-    # 1. Preguntar imagen
+    # La siguiente pregunta pide la ruta de la imagen
     ruta_imagen = input("Ruta de la imagen (ej. editada_foto.jpg): ").strip()
     if not os.path.exists(ruta_imagen):
-        print("La imagen no se encontro")
+        print("(-) No se encontro la imagen")
         return
 
     if not ruta_imagen.lower().endswith((".jpg", ".jpeg")):
-        print("Este extractor solo funciona con imágenes JPEG.")
+        print("(-) La imagen no es jpg")
         return
 
     # 2. Extraer y mostrar dato
     dato = extraer_metadato(ruta_imagen)
     if dato:
-        print(f"Dato encontrado en metadato: '{dato}'")
+        print(f"(+) El dato encontrado en la imagen es : '{dato}'")
     else:
-        print("No se encontró ningún dato en el metadato.")
+        print("(-) No se encontro metadatos")
 
 if __name__ == "__main__":
     main()
