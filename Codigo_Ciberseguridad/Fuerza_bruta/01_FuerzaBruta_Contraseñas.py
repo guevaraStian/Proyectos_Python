@@ -1,3 +1,4 @@
+# Fuerza bruta a un hash de contraseña
 # Primero se instala hashlib con el siguiente comando "pip install hashlib"
 import hashlib
 

@@ -1,4 +1,4 @@
-# Ejemplo de como crear un software de fuerza bruta con diccion
+# Ejemplo de como crear un software de fuerza bruta con diccionario
 # Primero importamos las librerias 
 # pip install requests
 # pip install termcolor

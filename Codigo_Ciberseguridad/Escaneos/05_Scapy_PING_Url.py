@@ -11,7 +11,8 @@ def ping(host):
     else:
         return f"{host} No esta en linea"
 
-url = "www.google.com"
+url = input("Por favor, la direccion url de la pagina web (ej: www.google.com) : ")
+# url = "www.google.com"
 result = ping(url)
 print(result)
 

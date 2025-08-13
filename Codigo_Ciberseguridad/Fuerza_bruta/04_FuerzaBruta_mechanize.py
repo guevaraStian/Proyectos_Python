@@ -7,7 +7,8 @@ import mechanize
 import time
 
 # Se crean las variables necesarias
-url_victima = "http://localhost:8080/login"
+url_victima = input("Por favor, la direccion url de la pagina web (ej: http://localhost:8080/login) : ")
+# url_victima = "http://localhost:8080/login"
 usuarios = "admin"
 contrasena = ["1234", "admin", "toor", "letmein", "root", "password"]
 

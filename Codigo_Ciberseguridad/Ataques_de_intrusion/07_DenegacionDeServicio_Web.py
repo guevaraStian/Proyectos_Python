@@ -7,7 +7,8 @@ import threading
 import time
 
 # Configura la URL de destino (usa tu propio servidor local o autorizado)
-url = "http://192.168.1.6:8000"
+url = input("Por favor, la direccion url de la pagina web (ej: www.google.com) : ")
+# url = "http://192.168.1.6:8000"
 
 # Cantidad de peticiones por un hilo
 Peticiones_Hilo = 5000

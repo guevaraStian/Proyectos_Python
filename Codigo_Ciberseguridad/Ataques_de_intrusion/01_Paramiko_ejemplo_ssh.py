@@ -3,7 +3,8 @@ import paramiko
 
 #En las siguientes lineas, se crean las variables necesarias
 #Acontinuacion se guarda la ip del dispositivo final de la conexion ssh, el puerto y el usuario y contraseña
-host = "192.168.0.10"
+host = input("Por favor, la direccion ip de la victima (ej: 192.168.0.10) : ")
+# host = "192.168.0.10"
 puerto = 22
 nombre_usuario = "root"
 contraseña = "root"
