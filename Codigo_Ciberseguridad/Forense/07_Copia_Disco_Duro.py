@@ -1,10 +1,8 @@
-# Este es un codigo para extraer la mayor cantidad de informacion de
-# Un sistema operativo Android, como requisito hay que descargar
+# Este es un codigo para sacar una copia de un disco duro
+# Un sistema operativo Windows 
 # El software y luego instalar las librerias de python
 # Por ultimo dar los permisos adminin al archivo o terminal
-# wsl --install
-# pip install --user buildozer
-# buildozer init
+# pip install hashlib
 import hashlib
 
 def copia_forense_a_iso(origen, salida_iso, tamano_bloque=4096):
