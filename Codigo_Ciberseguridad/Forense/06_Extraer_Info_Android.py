@@ -3,12 +3,29 @@
 # El software y luego instalar las librerias de python
 # Por ultimo dar los permisos adminin al archivo o terminal
 # wsl --install
-# pip install --user buildozer
+# pip install --user buildozer requests
 # buildozer init
 from jnius import autoclass, cast
 from android.permissions import request_permissions, Permission
 from android.storage import primary_external_storage_path
 import os
+import time
+from datetime import datetime
+import requests
+
+Tiempo_Inicial = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+respuesta = requests.get("https://ipinfo.io/json")
+datos = respuesta.json()
+
+print("(+) Ubicación aproximada:")
+print(f"IP: {datos.get('ip')}")
+print(f"Ciudad: {datos.get('city')}")
+print(f"Región: {datos.get('region')}")
+print(f"País: {datos.get('country')}")
+print(f"Ubicación (lat,long): {datos.get('loc')}")
+print(f"Organización: {datos.get('org')}")
+print(f"Zona Horaria: {datos.get('timezone')}")
+Ubicacion = datos.get('loc')
 
 def get_device_info():
     PythonActivity = autoclass('org.kivy.android.PythonActivity')

@@ -2,16 +2,32 @@
 # Un sistema operativo MAC, como requisito hay que descargar
 # El software y luego instalar las librerias de python
 # Por ultimo dar los permisos adminin al archivo o terminal
-# pip install psutil wmi
+# pip install psutil wmi requests
 import os
 import subprocess
 import socket
 from datetime import datetime
+import time
+from datetime import datetime
+import requests
+
+respuesta = requests.get("https://ipinfo.io/json")
+datos = respuesta.json()
+
+print("(+) Ubicación aproximada:")
+print(f"IP: {datos.get('ip')}")
+print(f"Ciudad: {datos.get('city')}")
+print(f"Región: {datos.get('region')}")
+print(f"País: {datos.get('country')}")
+print(f"Ubicación (lat,long): {datos.get('loc')}")
+print(f"Organización: {datos.get('org')}")
+print(f"Zona Horaria: {datos.get('timezone')}")
+Ubicacion = datos.get('loc')
 
 # Crear nombre de carpeta dinámico
 hostname = socket.gethostname()
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_dir = f"Info_Mac_{hostname}_{timestamp}"
+output_dir = f"Info_Mac_{hostname}_{timestamp}_{Ubicacion}"
 os.makedirs(output_dir, exist_ok=True)
 
 def save_output(name, command):

@@ -2,17 +2,38 @@
 # Un sistema operativo microsoft
 # El software y luego instalar las librerias de python
 # Por ultimo dar los permisos adminin al archivo o terminal
-# pip install sounddevice scipy
+# pip install sounddevice scipy requests
 
 import sounddevice as sd
 from scipy.io.wavfile import write
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
+import time
+from datetime import datetime
+import requests
 
 # Parámetros
 duracion_segundos = 5       # Duración de la grabación
 frecuencia_muestreo = 44100 # Frecuencia de muestreo estándar en Hz (CD Quality)
+
+Tiempo_Inicial = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+respuesta = requests.get("https://ipinfo.io/json")
+datos = respuesta.json()
+
+print("(+) Ubicación aproximada:")
+print(f"IP: {datos.get('ip')}")
+print(f"Ciudad: {datos.get('city')}")
+print(f"Región: {datos.get('region')}")
+print(f"País: {datos.get('country')}")
+print(f"Ubicación (lat,long): {datos.get('loc')}")
+print(f"Organización: {datos.get('org')}")
+print(f"Zona Horaria: {datos.get('timezone')}")
+Ubicacion = datos.get('loc')
+
+
+
 
 print("(+) Grabando...")
 audio = sd.rec(int(duracion_segundos * frecuencia_muestreo), samplerate=frecuencia_muestreo, channels=2)
@@ -20,7 +41,7 @@ sd.wait()  # Espera a que termine la grabación
 print("(+) Grabación terminada.")
 
 # Guardar como archivo WAV
-archivo_salida = "grabacion.wav"
+archivo_salida = "Grabacion_{Tiempo_Inicial}_{Ubicacion}.wav"
 write(archivo_salida, frecuencia_muestreo, audio)
 print(f"(+) Audio guardado como: {archivo_salida}")
 
@@ -29,7 +50,7 @@ print(f"(+) Audio guardado como: {archivo_salida}")
 
 
 # Cargar archivo .wav
-nombre_archivo = 'grabacion.wav'  # Cambia esto por tu archivo
+nombre_archivo = 'Grabacion_{Tiempo_Inicial}_{Ubicacion}.wav'  # Cambia esto por tu archivo
 frecuencia_muestreo, datos = wavfile.read(nombre_archivo)
 
 # Si el archivo es estéreo, convertir a mono

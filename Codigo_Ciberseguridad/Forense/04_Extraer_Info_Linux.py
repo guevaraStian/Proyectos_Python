@@ -2,7 +2,7 @@
 # Un sistema operativo Linux, como requisito hay que descargar
 # El software y luego instalar las librerias de python
 # Por ultimo dar los permisos adminin al archivo o terminal
-# # pip install psutil distro
+# # pip install psutil distro requests
 
 
 import os
@@ -11,10 +11,26 @@ import socket
 import subprocess
 import psutil
 import distro
+import time
 from datetime import datetime
+import requests
+
+Tiempo_Inicial = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+respuesta = requests.get("https://ipinfo.io/json")
+datos = respuesta.json()
+
+print("(+) Ubicación aproximada:")
+print(f"IP: {datos.get('ip')}")
+print(f"Ciudad: {datos.get('city')}")
+print(f"Región: {datos.get('region')}")
+print(f"País: {datos.get('country')}")
+print(f"Ubicación (lat,long): {datos.get('loc')}")
+print(f"Organización: {datos.get('org')}")
+print(f"Zona Horaria: {datos.get('timezone')}")
+Ubicacion = datos.get('loc')
 
 # Crear carpeta con nombre basado en hostname y fecha
-OUTPUT_DIR = f"Info_Linux_{socket.gethostname()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+OUTPUT_DIR = f"Info_Linux_{socket.gethostname()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{Ubicacion}"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def save_output(name, command):

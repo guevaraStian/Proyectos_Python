@@ -2,17 +2,28 @@
 # Un sistema operativo Windows 
 # El software y luego instalar las librerias de python
 # Por ultimo dar los permisos adminin al archivo o terminal
-# pip install hashlib
+# pip install hashlib requests
 import hashlib
+import time
+from datetime import datetime
+import requests
 
+Tiempo_Inicial = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+respuesta = requests.get("https://ipinfo.io/json")
+datos = respuesta.json()
+
+print("(+) Ubicación aproximada:")
+print(f"IP: {datos.get('ip')}")
+print(f"Ciudad: {datos.get('city')}")
+print(f"Región: {datos.get('region')}")
+print(f"País: {datos.get('country')}")
+print(f"Ubicación (lat,long): {datos.get('loc')}")
+print(f"Organización: {datos.get('org')}")
+print(f"Zona Horaria: {datos.get('timezone')}")
+Ubicacion = datos.get('loc')
+
+# Con la siguiente funcion se copia la informacion en el disco duro seleccionado
 def copia_forense_a_iso(origen, salida_iso, tamano_bloque=4096):
-    """
-    Realiza una copia forense bit a bit desde un disco o partición a un archivo con extensión .iso.
-    
-    :param origen: Ruta al dispositivo de origen (ej. /dev/sdb o \\.\PhysicalDrive1)
-    :param salida_iso: Nombre del archivo ISO destino (ej. disco.iso)
-    :param tamano_bloque: Tamaño del bloque de lectura en bytes (default: 4096)
-    """
     try:
         hash_sha256 = hashlib.sha256()
         total_bytes = 0
@@ -40,6 +51,6 @@ def copia_forense_a_iso(origen, salida_iso, tamano_bloque=4096):
 
 # Ejemplo de uso:
 # En Linux: copia_forense_a_iso("/dev/sdb", "imagen_forense.iso")
-copia_forense_a_iso(r"\\.\PhysicalDrive1", "Disco_Duro.iso")
+copia_forense_a_iso(r"\\.\PhysicalDrive1", "Disco_Duro_{Tiempo_Inicial}_{Ubicacion}.iso")
 
 

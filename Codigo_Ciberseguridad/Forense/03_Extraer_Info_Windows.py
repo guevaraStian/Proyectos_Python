@@ -14,11 +14,28 @@ import psutil
 import wmi
 from datetime import datetime
 import getpass
+import time
+from datetime import datetime
+import requests
+
+Tiempo_Inicial = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+respuesta = requests.get("https://ipinfo.io/json")
+datos = respuesta.json()
+
+print("(+) Ubicación aproximada:")
+print(f"IP: {datos.get('ip')}")
+print(f"Ciudad: {datos.get('city')}")
+print(f"Región: {datos.get('region')}")
+print(f"País: {datos.get('country')}")
+print(f"Ubicación (lat,long): {datos.get('loc')}")
+print(f"Organización: {datos.get('org')}")
+print(f"Zona Horaria: {datos.get('timezone')}")
+Ubicacion = datos.get('loc')
 
 # Crear carpeta con nombre basado en hostname y fecha
 hostname = socket.gethostname()
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-output_dir = f"Info_Windows_{hostname}_{timestamp}"
+output_dir = f"Info_Windows_{hostname}_{timestamp}_{Ubicacion}"
 os.makedirs(output_dir, exist_ok=True)
 
 # Se guarda un archvio en la carpeta creada
