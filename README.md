@@ -23,6 +23,7 @@ Despues de haber instalado python y confirmar la version, instalamos git y desca
 git --version
 git init
 git clone https://github.com/guevaraStian/Proyectos_Python.git
+Cd Proyectos_Python
 git push origin master
 ```
 
