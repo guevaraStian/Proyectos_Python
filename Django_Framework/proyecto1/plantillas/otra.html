@@ -1,0 +1,25 @@
+
+{% extends "barra.html" %}
+
+{% block content %}
+
+
+<form action="" method="get" enctype="multipart/form-data" name="mi_formulario">
+    <input type="text" name="q"/>
+      <input type="button" value="Buscar en SoEs" class="btn btn-success" onclick="enviarPost( 'https://es.stackoverflow.com/search')"/>___
+      <input type="button" value="Buscar en Yahoo" class="btn btn-success" onclick="enviarPost( 'https://yahoo.com/search/')"/>
+  </form>
+<script>
+    
+
+    function enviarPost( url){
+    console.info("inicio validacion del form>>");
+  
+    console.info("fin  validacion del form<<");
+    var formulario = document.mi_formulario;
+    formulario.action = url;
+    formulario.submit();
+  }
+</script>
+
+{% endblock %}

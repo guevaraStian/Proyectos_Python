@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    {% extends "barra.html" %}
+
+    {% block content %}
+
+    <h1>hola alumnos como estan?  {{nombre}} {{apellido}} </h1>
+
+    <h4>{{temas}}</h4>
+    <h1>Por numero en la lista </h1>
+    <h4>{{temas.0}}</h4>
+    <h4>{{temas.1}}</h4>
+    <h4>{{temas.2}}</h4>
+
+    <h1>Recorre una lista con un for </h1>
+    <h4>
+        {% for untema in temas %}
+        <h4> {{ untema }}</h4>
+        {% endfor %}
+    </h4>
+    
+
+    <h1>Si hay informacion, recorre el for, si no muestra mensaje </h1>
+    {% if otrostemas %}
+    <h4>
+        {% for untema in temas %}
+        <h4> {{ untema }}</h4>
+        {% endfor %}
+    </h4>
+    {% else %}
+    <h4>No hay informacion</h4>
+    {% endif %}
+
+
+
+    
+    {% endblock %}
+
+
+
+</body>
+</html>
