@@ -1,5 +1,5 @@
 
-<h1 style="font-size: 3em; color: #FF0000;">•  PROYECTOS SENCILLOS CREADOS CON PYTHON</h1> 
+<h1 style="font-size: 3em; color: #FF0000;">•  PROYECTOS PYTHON</h1> 
 
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
