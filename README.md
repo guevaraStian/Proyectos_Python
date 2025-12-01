@@ -1,4 +1,6 @@
-Proyectos sencillos creados con Python
+
+<h1 style="font-size: 3em; color: #FF0000;">•  PROYECTOS PYTHON</h1> 
+
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
