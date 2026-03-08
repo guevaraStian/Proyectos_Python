@@ -20,7 +20,7 @@ python --version
 pip --version
 ```
 
-Despues de haber instalado python y confirmar la version, instalamos git y descargamos el proyecto.
+Despues de haber instalado python y confirmar la version, instalamos git y descargamos el proyecto. Se puede descargar los proyectos desde el boton verde que dice "code" y dowload, otra forma es por medio de terminal de comandos.
 ```Terminal de comandos
 git --version
 git init
