@@ -1,10 +1,7 @@
 
 <h1 style="font-size: 3em; color: #FF0000;">•  PROYECTOS PYTHON</h1> 
 
-
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-
-<h2> ¡¡ ADVERTENCIA !! , TODOS LOS SOFTWARE DE ESTE REPOSITORIO, RELACIONADOS A CIBERSEGURIDAD TIENEN FUNCIONES EDUCATIVAS Y PEDAGOGICAS, NO DEBEN USARSE PARA VIOLAR PRIVACIDADES, SE PUEDE PRACTICAR EN SUS DISPOSITIVOS QUE TE PERTENEZCAN. SON PROGRAMAS DE HACKING ETICO Y NO PARA HACER CRIMENES.</h2>
 
 Los pasos para poner en ejecución son los siguientes
 Ir a la pagina web de Python y descargarlo para tu sistema operativo, escoger la opción "add path" con el fin de poder ejecutar comandos de Python en la terminal de comandos, y tambien descargarmos Git para las versiones del proyecto, en la siguientes 2 paginas web, se muestra donde descargar python y git.
@@ -38,3 +35,6 @@ pip install <Libreria_Necesaria>
 python <Nombre_Proyecto.py>
 ```
 Luego que el proyecto ya se este ejecutando se darán diferentes respuestas en consola o pestañas emergentes.
+
+
+<h2> ¡¡ ADVERTENCIA !! , TODOS LOS SOFTWARE DE ESTE REPOSITORIO, RELACIONADOS A CIBERSEGURIDAD TIENEN FUNCIONES EDUCATIVAS Y PEDAGOGICAS, NO DEBEN USARSE PARA VIOLAR PRIVACIDADES, SE PUEDE PRACTICAR EN SUS DISPOSITIVOS QUE TE PERTENEZCAN. SON PROGRAMAS DE HACKING ETICO Y NO PARA HACER CRIMENES.</h2>
