@@ -1,88 +1,90 @@
 # Pasar de audio a texto
-# Usando whisper y pydub
+# Usando whisper y Sklearn
 # Archivo TXT 
-# pip install openai-whisper pydub soundfile numpy
-import whisper  
+# pip install numpy scipy librosa soundfile torch torchaudio pyannote.audio openai-whisper tqdm
+import whisper
+import librosa
 import soundfile as sf
 import numpy as np
-import os
-import librosa
-from scipy.spatial.distance import cosine
+from tqdm import tqdm
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.preprocessing import StandardScaler
 
-# --- Configuración ---
-audio_file = "mi_audio.wav"  # Solo wav
-output_txt = "transcripcion_por_voces.txt"
+# Creacion de variables necesarias
+audio_file = "mi_audio.wav"
+output_txt = "transcripcion_3.txt"
+model_size = "large"  # modelo más preciso de Whisper
+min_silence_len = 0.5  # segundos de silencio para separar turnos
+silence_thresh = 0.01  # nivel de RMS considerado silencio
+sr_target = 16000       # frecuencia de muestreo deseada
 
-# --- Cargar audio ---
-y, sr = sf.read(audio_file)
-print(f"Audio cargado: {len(y)/sr:.2f} segundos")
+# Se carga en el software el audio indicado
+y, sr = librosa.load(audio_file, sr=sr_target)
+duration = librosa.get_duration(y=y, sr=sr)
+print(f"Duración del audio: {duration:.2f} segundos")
 
-# --- Detectar segmentos de voz simple por energía ---
-frame_len = int(sr * 0.5)  # ventanas de 0.5 s
-energy = [np.sum(np.abs(y[i:i+frame_len])) for i in range(0, len(y), frame_len)]
-threshold = np.percentile(energy, 50)  # umbral de energía
+# Se detectan silencios y momentos de habla
+rms = librosa.feature.rms(y=y)[0]
+frames = np.arange(len(rms))
+times = librosa.frames_to_time(frames, sr=sr, hop_length=512)
+
 segments = []
-start = None
+start_idx = 0
+for i in range(1, len(rms)):
+    if rms[i] < silence_thresh:
+        if times[i] - times[start_idx] > min_silence_len:
+            segments.append((times[start_idx], times[i]))
+            start_idx = i+1
+segments.append((times[start_idx], duration))
+print(f"Se detectaron {len(segments)} segmentos de audio para transcripción.")
 
-for i, e in enumerate(energy):
-    t = i * 0.5  # tiempo en segundos
-    if e > threshold and start is None:
-        start = t
-    elif e <= threshold and start is not None:
-        end = t
-        segments.append((start, end))
-        start = None
-if start is not None:
-    segments.append((start, len(y)/sr))
+# Se extraen segmentos de frases para la transcripcion
+segment_features = []
 
-print(f"{len(segments)} segmentos detectados")
+for start, end in segments:
+    start_sample = int(start * sr)
+    end_sample = int(end * sr)
+    seg_audio = y[start_sample:end_sample]
+    # Extraer MFCC como features de voz
+    mfcc = librosa.feature.mfcc(y=seg_audio, sr=sr, n_mfcc=13)
+    mfcc_mean = np.mean(mfcc, axis=1)
+    segment_features.append(mfcc_mean)
 
-# --- Cargar modelo Whisper ---
-model = whisper.load_model("base")
+# Normalizar features
+scaler = StandardScaler()
+X = scaler.fit_transform(segment_features)
 
-# --- Función para obtener MFCC promedio de un segmento ---
-def mfcc_embedding(y_segment, sr, n_mfcc=13):
-    mfccs = librosa.feature.mfcc(y=y_segment, sr=sr, n_mfcc=n_mfcc)
-    return np.mean(mfccs, axis=1)
+# Se agrupan caracteristicas de voces particulares
+n_voices = 2  # cambiar según cuántas voces esperes
+clustering = AgglomerativeClustering(n_clusters=n_voices)
+labels = clustering.fit_predict(X)
 
-# --- Diccionario para voces ya identificadas ---
-voice_embeddings = []
-voice_names = []
+# Se carga el modelo whisper
+print("Cargando modelo Whisper...")
+model = whisper.load_model(model_size)
+print("Modelo cargado con éxito.\n")
 
-# --- Transcribir segmentos en español y asignar voz ---
+# Se transcriben los segementos de frases de voz
+transcriptions = []
+
+for i, (start, end) in enumerate(tqdm(segments, desc="Transcribiendo segmentos", unit="segment")):
+    start_sample = int(start * sr)
+    end_sample = int(end * sr)
+    segment_audio = y[start_sample:end_sample]
+    
+    temp_file = "temp_segment.wav"
+    sf.write(temp_file, segment_audio, sr)
+    
+    result = model.transcribe(temp_file, language="es", fp16=False, verbose=False)
+    text = result["text"].strip()
+    
+    if text:
+        voz_id = f"Voz {labels[i]+1}"  # +1 para mostrar Voz 1, Voz 2...
+        transcriptions.append((voz_id, text))
+
+# Se guarda la transcripcion en un .txt
 with open(output_txt, "w", encoding="utf-8") as f:
-    for i, (start, end) in enumerate(segments):
-        start_sample = int(start * sr)
-        end_sample = int(end * sr)
-        segment_audio = y[start_sample:end_sample]
+    for speaker, text in transcriptions:
+        f.write(f"{speaker}: {text}\n")
 
-        # Guardar temporal
-        tmp_file = f"segmento_temp_{i}.wav"
-        sf.write(tmp_file, segment_audio, sr)
-
-        # Transcribir en español
-        result = model.transcribe(tmp_file, task="transcribe", language="es")
-        text = result["text"].strip()
-
-        if text:
-            # Calcular MFCC del segmento
-            embedding = mfcc_embedding(segment_audio, sr)
-
-            # Comparar con voces anteriores
-            assigned_voice = None
-            for idx, prev_emb in enumerate(voice_embeddings):
-                if cosine(embedding, prev_emb) < 0.4:  # umbral de similitud
-                    assigned_voice = voice_names[idx]
-                    break
-
-            if assigned_voice is None:
-                # Nueva voz
-                assigned_voice = f"Voz {len(voice_embeddings)+1}"
-                voice_embeddings.append(embedding)
-                voice_names.append(assigned_voice)
-
-            f.write(f"{assigned_voice}: {text}\n")
-
-        os.remove(tmp_file)
-
-print(f"Transcripción en español guardada en {output_txt}")
+print(f"\nTranscripción completa guardada en '{output_txt}'")
