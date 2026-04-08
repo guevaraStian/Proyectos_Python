@@ -1,7 +1,6 @@
 
 <h1 style="font-size: 3em; color: #FF0000;">•  PROYECTOS PYTHON</h1> 
 
-
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
 Los pasos para poner en ejecución son los siguientes
@@ -36,3 +35,5 @@ pip install <Libreria_Necesaria>
 python <Nombre_Proyecto.py>
 ```
 Luego que el proyecto ya se este ejecutando se darán diferentes respuestas en consola o pestañas emergentes.
+
+<h2> ¡¡ ADVERTENCIA !! , TODOS LOS SOFTWARE DE ESTE REPOSITORIO, RELACIONADOS A CIBERSEGURIDAD TIENEN FUNCIONES EDUCATIVAS Y PEDAGOGICAS, NO DEBEN USARSE PARA VIOLAR PRIVACIDADES, NO DEBE USARSE SIN CONSENTIMIENTO DEL PROPIETARIO. SON PROGRAMAS DE HACKING ETICO Y EL USUARIO DE ESTOS SOFTWARE ES RESPONSABLE DE SU USO.</h2> 
