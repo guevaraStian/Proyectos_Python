@@ -3,6 +3,7 @@
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
+El siguiente repositorio tiene diferentes proyectos en el lenguaje python, con explicaciones de como funciona cada linea de codigo y como poner a funcionar cada software.
 Los pasos para poner en ejecución son los siguientes
 Ir a la pagina web de Python y descargarlo para tu sistema operativo, escoger la opción "add path" con el fin de poder ejecutar comandos de Python en la terminal de comandos, y tambien descargarmos Git para las versiones del proyecto, en la siguientes 2 paginas web, se muestra donde descargar python y git.
 
